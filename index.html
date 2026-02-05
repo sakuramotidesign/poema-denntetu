@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>チーム進捗表示（STEP1）</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+    .team {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    button {
+      margin-right: 10px;
+    }
+
+    button {
+      font-size: 16px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+    }
+
+    input {
+      font-size: 16px;
+      padding: 8px;
+    }
+    /* ===== 乗り換えオーバーレイ ===== */
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    input:disabled {
+      opacity: 0.4;
+    }
+
+ .overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+ .overlay-box {
+  background: #fff;
+  padding: 25px 35px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 18px;
+}
+
+  </style>
+</head>
+<body>
+
+<!-- ===== プレイヤー登録画面 ===== -->
+<div id="registerScreen">
+  <h2>プレイヤー登録</h2>
+
+    <p id="needRegisterMsg" style="color:#555;">
+    ゲームを始めるには、まず登録してください
+  </p>
+
+  <p>名前：</p>
+  <input type="text" id="playerName" placeholder="名前を入力">
+
+  <p>所属チーム：</p>
+  <select id="teamSelect">
+    <option value="A">Aチーム</option>
+    <option value="B">Bチーム</option>
+  </select>
+
+  <br><br>
+  <button id="registerBtn">決定</button>
+</div>
+
+<!-- ===== ゲーム画面（最初は非表示） ===== -->
+<div id="gameScreen" style="display:none;">
+
+  <h1>チーム進捗</h1>
+
+  <p id="myTeamLabel"></p>
+
+  <div class="team">
+    <h2>Aチーム</h2>
+    <p>現在地：<span id="teamA-position">---</span></p>
+      <span id="teamA-arrival">到着予定駅: -</span>
+      <p>🎲 サイコロ結果：<span id="diceResultA">-</span></p>
+  <button id="rollDiceBtnA">サイコロを振る</button>
+  <button id="arriveBtnA">駅に到着</button>
+  <input type="number" id="walkA" placeholder="歩いた駅数">
+  <button id="addWalkA">加算</button>
+  <button id="undoBtnA">Aチームを戻す</button>
+  <p>⏳ 残り時間：<span id="waitA">-</span></p>
+  </div>
+
+  <div class="team">
+    <h2>Bチーム</h2>
+    <p>現在地：<span id="teamB-position">---</span></p>
+      <span id="teamB-arrival">到着予定駅: -</span>
+      <p>🎲 サイコロ結果：<span id="diceResultB">-</span></p>
+  <button id="rollDiceBtnB">サイコロを振る</button>
+  <button id="arriveBtnB">駅に到着</button>
+  <input type="number" id="walkB" placeholder="歩いた駅数">
+  <button id="addWalkB">加算</button>
+  <button id="undoBtnB">Bチームを戻す</button>
+  <p>⏳ 残り時間：<span id="waitB">-</span></p>
+
+  </div>
+
+  <button id="resetBtn" style="margin-top:20px;">
+    全データをリセット
+  </button>
+
+</div>
+
+<!-- ===== 乗り換えオーバーレイ ===== -->
+<div id="overlay" class="overlay">
+  <div class="overlay-box">
+    <p id="overlayText"></p>
+    <button id="overlayCloseBtn">OK</button>
+  </div>
+</div>
+
+<!-- Firebase core -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+
+<!-- Realtime Database -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<!-- あなたのJS -->
+<script src="script.js"></script>
+</body>
+</html>
+
+
+
